@@ -1,9 +1,78 @@
 import React from 'react';
+import { validateCard, logPropsFlow } from '../utils/cardValidation';
+
+// Debug test function to verify all card types work
+const testAllCardTypes = () => {
+  console.log('🧪 DEBUG TEST: Testing all card types...');
+  
+  const testCards = [
+    { id: 'test-text', type: 'text', title: 'Test Text', content: 'Test content' },
+    { id: 'test-status', type: 'status', title: 'Test Status', status: 'online', message: 'Test message' },
+    { id: 'test-info', type: 'info', title: 'Test Info', items: ['item1', 'item2'] },
+    { id: 'test-chart', type: 'chart', title: 'Test Chart', data: [1, 2, 3] },
+    { id: 'test-metric', type: 'metric', title: 'Test Metric', value: 42, unit: 'units' },
+    { id: 'test-image', type: 'image', title: 'Test Image', imageUrl: 'test.jpg' }
+  ];
+  
+  testCards.forEach(card => {
+    console.log(`🧪 Testing ${card.type} card:`, card);
+    try {
+      // Test type conversion and comparison
+      const cardType = card.type.toLowerCase();
+      console.log(`🧪 Type "${card.type}" → "${cardType}"`);
+      console.log(`🧪 Matches text: ${cardType === 'text'}`);
+      console.log(`🧪 Matches status: ${cardType === 'status'}`);
+      console.log(`🧪 Matches info: ${cardType === 'info'}`);
+      console.log(`🧪 Matches chart: ${cardType === 'chart'}`);
+      console.log(`🧪 Matches metric: ${cardType === 'metric'}`);
+      console.log(`🧪 Matches image: ${cardType === 'image'}`);
+    } catch (error) {
+      console.error(`🧪 Error testing ${card.type}:`, error);
+    }
+  });
+};
+
+// Run test once when module loads (only in development)
+if (process.env.NODE_ENV === 'development') {
+  testAllCardTypes();
+  
+  // Make debugging functions available globally for console testing
+  window.debugCardRenderer = {
+    testAllCardTypes,
+    testCard: (card) => {
+      console.log('🧪 Manual card test:', card);
+      return CardRenderer({ card });
+    },
+    createTestCard: (type, title = 'Test') => ({
+      id: `debug-${type}-${Date.now()}`,
+      type,
+      title,
+      content: 'Test content',
+      status: 'online',
+      items: ['test item'],
+      data: [1, 2, 3],
+      value: 42,
+      imageUrl: 'test.jpg'
+    })
+  };
+  
+  console.log('🧪 Debug functions available on window.debugCardRenderer');
+}
 
 const TextCard = ({ card }) => {
-  console.log('📝 CARD: Rendering TextCard with:', { title: card.title, content: card.content });
+  console.log('📝 CARD: ========== TextCard START ==========');
+  console.log('📝 CARD: TextCard function called');
+  console.log('📝 CARD: TextCard received props:', arguments);
+  console.log('📝 CARD: TextCard card prop:', card);
+  console.log('📝 CARD: TextCard rendering with:', { 
+    title: card.title, 
+    content: card.content,
+    hasTitle: !!card.title,
+    hasContent: !!card.content,
+    fullCard: card
+  });
   
-  return (
+  const element = (
     <div className="card" style={{ borderLeftColor: '#007bff' }}>
       <div className="card-title">{card.title || 'Text Card'}</div>
       <div className="card-content">
@@ -11,13 +80,26 @@ const TextCard = ({ card }) => {
       </div>
     </div>
   );
+  
+  console.log('📝 CARD: TextCard element created:', element);
+  console.log('📝 CARD: ========== TextCard END ==========');
+  
+  return element;
 };
 
 const StatusCard = ({ card }) => {
-  console.log('🚦 CARD: Rendering StatusCard with:', { 
+  console.log('🚦 CARD: ========== StatusCard START ==========');
+  console.log('🚦 CARD: StatusCard function called');
+  console.log('🚦 CARD: StatusCard received props:', arguments);
+  console.log('🚦 CARD: StatusCard card prop:', card);
+  console.log('🚦 CARD: StatusCard rendering with:', { 
     title: card.title, 
     status: card.status, 
-    message: card.message 
+    message: card.message,
+    hasTitle: !!card.title,
+    hasStatus: !!card.status,
+    hasMessage: !!card.message,
+    fullCard: card
   });
 
   const getStatusColor = (status) => {
@@ -39,8 +121,9 @@ const StatusCard = ({ card }) => {
   };
 
   const statusColor = getStatusColor(card.status);
+  console.log('🚦 CARD: StatusCard color determined:', statusColor, 'for status:', card.status);
 
-  return (
+  const element = (
     <div className="card" style={{ borderLeftColor: statusColor }}>
       <div className="card-title">{card.title || 'Status Card'}</div>
       <div className="card-content">
@@ -66,6 +149,11 @@ const StatusCard = ({ card }) => {
       </div>
     </div>
   );
+  
+  console.log('🚦 CARD: StatusCard element created:', element);
+  console.log('🚦 CARD: ========== StatusCard END ==========');
+  
+  return element;
 };
 
 const InfoCard = ({ card }) => {
@@ -373,52 +461,231 @@ const UnknownCard = ({ card }) => {
 };
 
 const CardRenderer = ({ card }) => {
-  console.log('🃏 CARD: Rendering card:', card);
-  console.log('🃏 CARD: Card validation:', {
+  console.log('🃏 CARD: ========== CARDRENDERER START ==========');
+  console.log('🃏 CARD: CardRenderer function called with card:', card);
+  console.log('🃏 CARD: Call stack:', new Error().stack);
+  
+  // Log complete props flow
+  logPropsFlow('CardRenderer', { card }, {
+    timestamp: new Date().toISOString(),
+    renderingPhase: 'cardRenderer_entry'
+  });
+  
+  console.log('🃏 CARD: Received props:', arguments);
+  console.log('🃏 CARD: Received card prop:', card);
+  
+  // Comprehensive validation
+  const validation = validateCard(card);
+  console.log('🔍 CARD: CardRenderer validation result:', validation);
+  
+  if (!validation.isValid) {
+    console.error('❌ CARD: CardRenderer validation failed:', validation.errors);
+  }
+  
+  // Deep analysis of the card object
+  console.log('🃏 CARD: Card deep analysis:', {
+    cardExists: !!card,
+    cardType: typeof card,
+    cardConstructor: card?.constructor?.name,
+    isArray: Array.isArray(card),
+    isObject: card && typeof card === 'object' && !Array.isArray(card),
+    cardString: JSON.stringify(card),
+    cardKeys: card ? Object.keys(card) : null,
+    cardValues: card ? Object.values(card) : null
+  });
+
+  console.log('🃏 CARD: Card validation details:', {
     hasCard: !!card,
     hasType: !!(card?.type),
     type: card?.type,
     typeOfType: typeof card?.type,
-    cardKeys: card ? Object.keys(card) : null,
-    cardId: card?.id,
-    cardTitle: card?.title
+    typeValue: card?.type,
+    hasId: !!(card?.id),
+    id: card?.id,
+    hasTitle: !!(card?.title),
+    title: card?.title,
+    allKeys: card ? Object.keys(card) : null
   });
 
-  if (!card) {
-    console.error('❌ CARD: Card is null/undefined');
+  // Check for common issues
+  if (card === null) {
+    console.error('❌ CARD: Card is explicitly null');
     return <UnknownCard card={{}} />;
   }
 
-  if (!card.type) {
-    console.error('❌ CARD: Card missing type field:', card);
+  if (card === undefined) {
+    console.error('❌ CARD: Card is undefined');
+    return <UnknownCard card={{}} />;
+  }
+
+  if (typeof card !== 'object') {
+    console.error('❌ CARD: Card is not an object, got:', typeof card, card);
+    return <UnknownCard card={{ error: `Invalid card type: ${typeof card}`, value: card }} />;
+  }
+
+  if (Array.isArray(card)) {
+    console.error('❌ CARD: Card is an array instead of object:', card);
+    return <UnknownCard card={{ error: 'Card is an array', value: card }} />;
+  }
+
+  // Type field analysis
+  if (!card.hasOwnProperty('type')) {
+    console.error('❌ CARD: Card object does not have "type" property');
+    console.error('❌ CARD: Available properties:', Object.keys(card));
+    return <UnknownCard card={card} />;
+  }
+
+  if (card.type === null) {
+    console.error('❌ CARD: Card type is null');
+    return <UnknownCard card={card} />;
+  }
+
+  if (card.type === undefined) {
+    console.error('❌ CARD: Card type is undefined');
+    return <UnknownCard card={card} />;
+  }
+
+  if (typeof card.type !== 'string') {
+    console.error('❌ CARD: Card type is not a string, got:', typeof card.type, card.type);
+    return <UnknownCard card={card} />;
+  }
+
+  if (card.type.trim() === '') {
+    console.error('❌ CARD: Card type is empty string');
     return <UnknownCard card={card} />;
   }
 
   const cardType = card.type.toLowerCase();
-  console.log('🃏 CARD: Processing card type:', cardType);
+  console.log('🃏 CARD: Processing card type:', `"${cardType}"`);
+  console.log('🃏 CARD: Original type value:', `"${card.type}"`);
+  console.log('🃏 CARD: Type conversion successful');
+
+  // Advanced string debugging
+  console.log('🔬 CARD: Advanced type analysis:', {
+    originalType: card.type,
+    originalLength: card.type.length,
+    originalCharCodes: [...card.type].map(char => char.charCodeAt(0)),
+    trimmed: card.type.trim(),
+    trimmedLength: card.type.trim().length,
+    processedType: cardType,
+    processedLength: cardType.length,
+    processedCharCodes: [...cardType].map(char => char.charCodeAt(0)),
+    hasWhitespace: /\s/.test(card.type),
+    hasSpecialChars: /[^\w]/.test(card.type.replace(/\s/g, '')),
+    startsWithLetter: /^[a-zA-Z]/.test(card.type),
+    exactMatch_text: cardType === 'text',
+    exactMatch_status: cardType === 'status',
+    exactMatch_info: cardType === 'info',
+    exactMatch_chart: cardType === 'chart',
+    exactMatch_metric: cardType === 'metric',
+    exactMatch_image: cardType === 'image'
+  });
+
+  // Log before entering switch
+  console.log('🃏 CARD: About to enter switch statement with type:', cardType);
+  console.log('🃏 CARD: Switch statement input verification:', {
+    typeValue: cardType,
+    typeString: String(cardType),
+    typeToString: cardType.toString(),
+    typeValueOf: cardType.valueOf()
+  });
 
   switch (cardType) {
     case 'text':
-      console.log('🃏 CARD: Rendering TextCard');
-      return <TextCard card={card} />;
+      console.log('✅ CARD: Matched TEXT type, rendering TextCard');
+      console.log('🃏 CARD: Calling TextCard with props:', card);
+      try {
+        const textCardElement = <TextCard card={card} />;
+        console.log('🏁 CARD: TextCard element created successfully:', textCardElement);
+        console.log('🏁 CARD: TextCard element type:', textCardElement?.type);
+        console.log('🏁 CARD: TextCard element props:', textCardElement?.props);
+        return textCardElement;
+      } catch (error) {
+        console.error('💥 CARD: Error creating TextCard:', error);
+        throw error;
+      }
     case 'status':
-      console.log('🃏 CARD: Rendering StatusCard');
-      return <StatusCard card={card} />;
+      console.log('✅ CARD: Matched STATUS type, rendering StatusCard');
+      console.log('🃏 CARD: Calling StatusCard with props:', card);
+      try {
+        const statusCardElement = <StatusCard card={card} />;
+        console.log('🏁 CARD: StatusCard element created successfully:', statusCardElement);
+        return statusCardElement;
+      } catch (error) {
+        console.error('💥 CARD: Error creating StatusCard:', error);
+        throw error;
+      }
     case 'info':
-      console.log('🃏 CARD: Rendering InfoCard');
-      return <InfoCard card={card} />;
+      console.log('✅ CARD: Matched INFO type, rendering InfoCard');
+      console.log('🃏 CARD: Calling InfoCard with props:', card);
+      try {
+        const infoCardElement = <InfoCard card={card} />;
+        console.log('🏁 CARD: InfoCard element created successfully:', infoCardElement);
+        return infoCardElement;
+      } catch (error) {
+        console.error('💥 CARD: Error creating InfoCard:', error);
+        throw error;
+      }
     case 'chart':
-      console.log('🃏 CARD: Rendering ChartCard');
-      return <ChartCard card={card} />;
+      console.log('✅ CARD: Matched CHART type, rendering ChartCard');
+      console.log('🃏 CARD: Calling ChartCard with props:', card);
+      try {
+        const chartCardElement = <ChartCard card={card} />;
+        console.log('🏁 CARD: ChartCard element created successfully:', chartCardElement);
+        return chartCardElement;
+      } catch (error) {
+        console.error('💥 CARD: Error creating ChartCard:', error);
+        throw error;
+      }
     case 'metric':
-      console.log('🃏 CARD: Rendering MetricCard');
-      return <MetricCard card={card} />;
+      console.log('✅ CARD: Matched METRIC type, rendering MetricCard');
+      console.log('🃏 CARD: Calling MetricCard with props:', card);
+      try {
+        const metricCardElement = <MetricCard card={card} />;
+        console.log('🏁 CARD: MetricCard element created successfully:', metricCardElement);
+        return metricCardElement;
+      } catch (error) {
+        console.error('💥 CARD: Error creating MetricCard:', error);
+        throw error;
+      }
     case 'image':
-      console.log('🃏 CARD: Rendering ImageCard');
-      return <ImageCard card={card} />;
+      console.log('✅ CARD: Matched IMAGE type, rendering ImageCard');
+      console.log('🃏 CARD: Calling ImageCard with props:', card);
+      try {
+        const imageCardElement = <ImageCard card={card} />;
+        console.log('🏁 CARD: ImageCard element created successfully:', imageCardElement);
+        return imageCardElement;
+      } catch (error) {
+        console.error('💥 CARD: Error creating ImageCard:', error);
+        throw error;
+      }
     default:
-      console.warn(`⚠️ CARD: Unknown card type "${cardType}", using fallback`);
-      return <UnknownCard card={card} />;
+      console.warn(`⚠️ CARD: ENTERING DEFAULT CASE - No match found for card type "${cardType}"`);
+      console.warn(`⚠️ CARD: Available types: text, status, info, chart, metric, image`);
+      console.warn(`⚠️ CARD: Type comparison results:`, {
+        text: cardType === 'text',
+        status: cardType === 'status',
+        info: cardType === 'info',
+        chart: cardType === 'chart',
+        metric: cardType === 'metric',
+        image: cardType === 'image'
+      });
+      console.warn(`⚠️ CARD: Type analysis for debugging:`, {
+        cardTypeValue: cardType,
+        cardTypeLength: cardType.length,
+        isString: typeof cardType === 'string',
+        trimmedType: cardType.trim(),
+        firstChar: cardType[0],
+        lastChar: cardType[cardType.length - 1],
+        allCharacters: [...cardType],
+        isExactlyText: cardType === 'text',
+        includesText: cardType.includes('text'),
+        indexOfText: cardType.indexOf('text')
+      });
+      console.warn(`⚠️ CARD: Using UnknownCard fallback`);
+      const unknownCardElement = <UnknownCard card={card} />;
+      console.log('🏁 CARD: UnknownCard element created:', unknownCardElement);
+      return unknownCardElement;
   }
 };
 
