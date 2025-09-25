@@ -1,0 +1,49 @@
+{
+  "viewId": "Morning",
+  "grid": {
+    "columns": 12,
+    "rows": 6
+  },
+  "tiles": [
+    {
+      "id": "clock-now",
+      "title": "Clock",
+      "column": 1,
+      "row": 1,
+      "columnSpan": 3,
+      "rowSpan": 2
+    },
+    {
+      "id": "weather-current",
+      "title": "Weather",
+      "column": 4,
+      "row": 1,
+      "columnSpan": 3,
+      "rowSpan": 2
+    },
+    {
+      "id": "todoist-summary",
+      "title": "Top Tasks",
+      "column": 7,
+      "row": 1,
+      "columnSpan": 6,
+      "rowSpan": 3
+    },
+    {
+      "id": "calendar-today",
+      "title": "Today's Calendar",
+      "column": 1,
+      "row": 3,
+      "columnSpan": 6,
+      "rowSpan": 3
+    },
+    {
+      "id": "cta-transit",
+      "title": "CTA Arrivals",
+      "column": 7,
+      "row": 4,
+      "columnSpan": 6,
+      "rowSpan": 2
+    }
+  ]
+}

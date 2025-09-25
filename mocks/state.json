@@ -1,0 +1,94 @@
+{
+  "view": "Morning",
+  "lastUpdated": "2024-04-15T12:10:00Z",
+  "tiles": {
+    "clock-now": {
+      "type": "clock-now",
+      "time": "2024-04-15T12:10:00Z",
+      "timezone": "America/Chicago"
+    },
+    "weather-current": {
+      "type": "weather-current",
+      "temperature": 58,
+      "unit": "°F",
+      "condition": "Partly Cloudy",
+      "humidity": 62
+    },
+    "todoist-summary": {
+      "type": "todoist-summary",
+      "tasks": [
+        {
+          "id": "task-1",
+          "content": "Slide deck for team stand-up",
+          "due": "2024-04-15T14:00:00-05:00",
+          "project": "Work",
+          "overdue": false
+        },
+        {
+          "id": "task-2",
+          "content": "Groceries curbside pickup",
+          "due": "2024-04-15T20:30:00-05:00",
+          "project": "Home",
+          "overdue": false
+        },
+        {
+          "id": "task-3",
+          "content": "Submit expense report",
+          "due": "2024-04-14T23:00:00-05:00",
+          "project": "Admin",
+          "overdue": true
+        }
+      ]
+    },
+    "calendar-today": {
+      "type": "calendar-today",
+      "events": [
+        {
+          "id": "event-1",
+          "title": "Design review",
+          "start": "2024-04-15T15:30:00-05:00",
+          "location": "Zoom"
+        },
+        {
+          "id": "event-2",
+          "title": "Lunch break",
+          "start": "2024-04-15T17:00:00-05:00",
+          "location": "Kitchen"
+        }
+      ]
+    },
+    "cta-transit": {
+      "type": "cta-transit",
+      "routes": [
+        {
+          "routeId": "Blue",
+          "name": "Blue Line",
+          "arrivals": [
+            {
+              "destination": "Downtown",
+              "etaMinutes": 5
+            },
+            {
+              "destination": "Forest Park",
+              "etaMinutes": 13
+            }
+          ]
+        },
+        {
+          "routeId": "20",
+          "name": "Madison",
+          "arrivals": [
+            {
+              "destination": "Austin",
+              "etaMinutes": 3
+            },
+            {
+              "destination": "Michigan",
+              "etaMinutes": 10
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

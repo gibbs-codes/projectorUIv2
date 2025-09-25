@@ -1,0 +1,15 @@
+{
+  "type": "cta-transit",
+  "routes": [
+    {
+      "routeId": "Blue",
+      "name": "Blue Line",
+      "arrivals": [
+        {
+          "destination": "O'Hare",
+          "etaMinutes": 7
+        }
+      ]
+    }
+  ]
+}

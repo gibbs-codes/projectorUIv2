@@ -1,0 +1,49 @@
+{
+  "viewId": "Work",
+  "grid": {
+    "columns": 12,
+    "rows": 6
+  },
+  "tiles": [
+    {
+      "id": "todoist-summary",
+      "title": "Priority Tasks",
+      "column": 1,
+      "row": 1,
+      "columnSpan": 6,
+      "rowSpan": 3
+    },
+    {
+      "id": "calendar-today",
+      "title": "Meetings",
+      "column": 7,
+      "row": 1,
+      "columnSpan": 6,
+      "rowSpan": 3
+    },
+    {
+      "id": "clock-now",
+      "title": "Current Time",
+      "column": 1,
+      "row": 4,
+      "columnSpan": 3,
+      "rowSpan": 2
+    },
+    {
+      "id": "weather-current",
+      "title": "Weather Snapshot",
+      "column": 4,
+      "row": 4,
+      "columnSpan": 3,
+      "rowSpan": 2
+    },
+    {
+      "id": "cta-transit",
+      "title": "Transit",
+      "column": 7,
+      "row": 4,
+      "columnSpan": 6,
+      "rowSpan": 2
+    }
+  ]
+}
