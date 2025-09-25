@@ -1,0 +1,7 @@
+{
+  "type": "weather-current",
+  "temperature": 60,
+  "unit": "°F",
+  "condition": "Sunny",
+  "humidity": 55
+}

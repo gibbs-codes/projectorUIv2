@@ -1,0 +1,63 @@
+{
+  "view": "Morning",
+  "lastUpdated": "2024-04-15T12:15:00Z",
+  "tiles": {
+    "clock-now": {
+      "type": "clock-now",
+      "time": "2024-04-15T12:15:00Z",
+      "timezone": "America/Chicago"
+    },
+    "weather-current": {
+      "type": "weather-current",
+      "temperature": 59,
+      "unit": "°F",
+      "condition": "Mostly Sunny",
+      "humidity": 58
+    },
+    "todoist-summary": {
+      "type": "todoist-summary",
+      "tasks": [
+        {
+          "id": "task-one",
+          "content": "Finish proposal",
+          "due": "2024-04-15T16:00:00-05:00",
+          "project": "Work",
+          "overdue": false
+        },
+        {
+          "id": "task-two",
+          "content": "Wash car",
+          "due": "2024-04-14T22:00:00-05:00",
+          "project": "Home",
+          "overdue": true
+        }
+      ]
+    },
+    "calendar-today": {
+      "type": "calendar-today",
+      "events": [
+        {
+          "id": "event-alpha",
+          "title": "1:1 with manager",
+          "start": "2024-04-15T15:00:00-05:00",
+          "location": "Zoom"
+        }
+      ]
+    },
+    "cta-transit": {
+      "type": "cta-transit",
+      "routes": [
+        {
+          "routeId": "Green",
+          "name": "Green Line",
+          "arrivals": [
+            {
+              "destination": "Loop",
+              "etaMinutes": 4
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "status": "healthy",
+  "checkedAt": "2024-04-15T12:10:15Z",
+  "tiles": {
+    "clock-now": {
+      "status": "healthy",
+      "stale": false,
+      "lastSuccess": "2024-04-15T12:10:00Z"
+    },
+    "weather-current": {
+      "status": "healthy",
+      "stale": false,
+      "lastSuccess": "2024-04-15T12:09:50Z"
+    },
+    "todoist-summary": {
+      "status": "healthy",
+      "stale": false,
+      "lastSuccess": "2024-04-15T12:09:30Z"
+    },
+    "calendar-today": {
+      "status": "healthy",
+      "stale": false,
+      "lastSuccess": "2024-04-15T12:09:55Z"
+    },
+    "cta-transit": {
+      "status": "healthy",
+      "stale": false,
+      "lastSuccess": "2024-04-15T12:09:40Z"
+    }
+  }
+}

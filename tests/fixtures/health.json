@@ -1,0 +1,10 @@
+{
+  "status": "healthy",
+  "tiles": {
+    "clock-now": { "status": "healthy", "stale": false },
+    "weather-current": { "status": "healthy", "stale": false },
+    "todoist-summary": { "status": "healthy", "stale": false },
+    "calendar-today": { "status": "healthy", "stale": false },
+    "cta-transit": { "status": "healthy", "stale": false }
+  }
+}
