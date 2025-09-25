@@ -1,0 +1,16 @@
+services:
+  tv-dashboard:
+    container_name: ${CONTAINER_NAME:-tv-dashboard}
+    image: ${IMAGE_NAME:-tv-dashboard:latest}
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    environment:
+      PORT: ${PORT:-3006}
+    ports:
+      - "${PORT:-3006}:${PORT:-3006}"
+    restart: unless-stopped
+    labels:
+      - app=tv-dashboard
