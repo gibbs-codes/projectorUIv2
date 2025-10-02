@@ -116,3 +116,120 @@ body {
   font-weight: 900;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
 }
+
+/* TV Display Optimizations */
+@media screen and (min-width: 1920px) {
+  /* Large screens (TV/projector displays) */
+  html {
+    zoom: 0.8;
+  }
+
+  body {
+    transform: scale(0.8);
+    transform-origin: 0 0;
+    width: 125%;
+    height: 125%;
+  }
+}
+
+@media screen and (min-width: 2560px) {
+  /* Ultra-wide and 4K displays */
+  html {
+    zoom: 0.75;
+  }
+
+  body {
+    transform: scale(0.75);
+    transform-origin: 0 0;
+    width: 133.33%;
+    height: 133.33%;
+  }
+}
+
+/* Android TV specific adjustments */
+@media screen and (-webkit-device-pixel-ratio: 1.5) {
+  html {
+    zoom: 0.7;
+  }
+}
+
+@media screen and (-webkit-device-pixel-ratio: 2) {
+  html {
+    zoom: 0.6;
+  }
+}
+
+/* TV-safe area adjustments */
+@media (display-mode: fullscreen) {
+  #root {
+    padding: 2vh 2vw;
+    box-sizing: border-box;
+  }
+}
+
+/* TV Display class for JavaScript-detected large screens */
+.tv-display {
+  transform: scale(0.75);
+  transform-origin: top left;
+  width: 133.33%;
+  height: 133.33%;
+}
+
+/* More aggressive scaling for Android TV */
+@media screen and (orientation: landscape) and (min-width: 1920px) {
+  .tv-display {
+    transform: scale(0.7);
+    width: 142.86%;
+    height: 142.86%;
+  }
+}
+
+/* Override font sizes for better TV readability */
+.tv-display .text-\[14rem\] {
+  font-size: 10rem !important;
+}
+
+.tv-display .text-6xl {
+  font-size: 4rem !important;
+}
+
+.tv-display .text-4xl {
+  font-size: 2.5rem !important;
+}
+
+.tv-display .text-3xl {
+  font-size: 1.875rem !important;
+}
+
+.tv-display .text-2xl {
+  font-size: 1.5rem !important;
+}
+
+.tv-display .text-xl {
+  font-size: 1.125rem !important;
+}
+
+.tv-display .text-lg {
+  font-size: 1rem !important;
+}
+
+/* Testing utilities - you can temporarily add these classes to #root */
+.zoom-out-75 {
+  zoom: 0.75;
+}
+
+.zoom-out-80 {
+  zoom: 0.8;
+}
+
+.zoom-out-70 {
+  zoom: 0.7;
+}
+
+.zoom-out-65 {
+  zoom: 0.65;
+}
+
+.zoom-out-60 {
+  zoom: 0.6;
+}

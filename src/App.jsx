@@ -19,6 +19,9 @@ const App = () => {
 
   const mode = dashboardData?.currentMode || dashboardData?.mode || 'personal';
 
+  // Detect if we're on a large display (likely TV/projector)
+  const isLargeDisplay = window.innerWidth >= 1920 || window.innerHeight >= 1080;
+
   useEffect(() => {
     const timer = setInterval(() => setTime(new Date()), 1000);
     return () => clearInterval(timer);
@@ -51,7 +54,7 @@ const App = () => {
   };
 
   return (
-    <div className="relative w-full h-screen overflow-hidden bg-black">
+    <div className={`relative w-full h-screen overflow-hidden bg-black ${isLargeDisplay ? 'tv-display' : ''}`}
       {/* Gradient background */}
       <div className={`absolute inset-0 bg-gradient-to-br ${getTimeOfDayGradient(hour)}`} />
 
@@ -160,6 +163,11 @@ const App = () => {
                 Error: {error}
               </div>
             )}
+
+            {/* TV Display Debug (remove after testing) */}
+            <div className="text-white/30 text-xs">
+              {isLargeDisplay ? 'TV Mode' : 'Desktop'} | {window.innerWidth}x{window.innerHeight}
+            </div>
           </div>
         </div>
       </div>
