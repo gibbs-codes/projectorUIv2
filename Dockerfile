@@ -29,12 +29,12 @@ COPY --from=build /app/dist ./dist
 # Install curl for health checks
 RUN apk add --no-cache curl
 
-# Expose port 3006 to match your GitHub workflow
-EXPOSE 3006
+# Expose port 3007 to match your GitHub workflow
+EXPOSE 3007
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-  CMD curl -f http://localhost:3006/ || exit 1
+  CMD curl -f http://localhost:3007/ || exit 1
 
 # Serve the built application
-CMD ["serve", "-s", "dist", "-l", "3006"]
+CMD ["serve", "-s", "dist", "-l", "3007"]
