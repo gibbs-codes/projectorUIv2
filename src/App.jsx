@@ -54,7 +54,7 @@ const App = () => {
   };
 
   return (
-    <div className={`relative w-full h-screen overflow-hidden bg-black ${isLargeDisplay ? 'tv-display' : ''}`}
+    <div className={`relative w-full h-screen overflow-hidden bg-black ${isLargeDisplay ? 'tv-display' : ''}`}>
       {/* Gradient background */}
       <div className={`absolute inset-0 bg-gradient-to-br ${getTimeOfDayGradient(hour)}`} />
 
