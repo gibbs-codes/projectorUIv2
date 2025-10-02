@@ -135,13 +135,13 @@ body {
 
 /* TV Display class for JavaScript-detected large screens */
 .tv-display {
-  zoom: 0.75;
+  zoom: 0.6;
 }
 
 /* More aggressive scaling for Android TV */
 @media screen and (orientation: landscape) and (min-width: 1920px) {
   .tv-display {
-    zoom: 0.7;
+    zoom: 0.55;
   }
 }
 
