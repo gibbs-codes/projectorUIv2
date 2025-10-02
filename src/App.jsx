@@ -3,7 +3,7 @@ import useDashboardData from './hooks/useDashboardData';
 import { formatTime, formatDate, getTimeOfDayGradient, getAlertOverlay } from './utils/timeFormatters';
 
 // Layout components
-import PersonalLayout from './components/layouts/personalLayout';
+import PersonalLayout from './components/layouts/PersonalLayout';
 import GuestLayout from './components/layouts/GuestLayout';
 import BriefingLayout from './components/layouts/BriefingLayout';
 
