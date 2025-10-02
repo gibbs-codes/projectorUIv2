@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import useDashboardApi from './useDashboardApi';
+import { API_BASE_URL, REFRESH_INTERVAL, ENABLE_MOCK_DATA } from '../config';
 
 const MOCK_DATA = {
   mode: 'personal',
@@ -85,41 +86,30 @@ const MOCK_DATA = {
 };
 
 const useDashboardData = () => {
-  const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
-  const useMockData = import.meta.env.VITE_ENABLE_MOCK_DATA === 'true';
-  const pollInterval = 30000; // 30 seconds
-
-  // Debug logging for production
-  console.log('🔧 Dashboard Config:', {
-    apiBaseUrl,
-    useMockData,
-    env: import.meta.env.MODE
-  });
-
   const { data: apiData, loading, error, lastFetch, refreshData, changeMode } = useDashboardApi(
-    useMockData ? null : apiBaseUrl,
-    pollInterval
+    ENABLE_MOCK_DATA ? null : API_BASE_URL,
+    REFRESH_INTERVAL
   );
   const [dashboardData, setDashboardData] = useState(MOCK_DATA);
 
   useEffect(() => {
-    if (useMockData) {
+    if (ENABLE_MOCK_DATA) {
       console.log('📊 Using mock data for dashboard');
       setDashboardData(MOCK_DATA);
     } else if (apiData) {
       console.log('📊 Using live API data for dashboard');
       setDashboardData(apiData);
     }
-  }, [useMockData, apiData]);
+  }, [apiData]);
 
   return {
     data: dashboardData,
-    loading: useMockData ? false : loading,
-    error: useMockData ? null : error,
+    loading: ENABLE_MOCK_DATA ? false : loading,
+    error: ENABLE_MOCK_DATA ? null : error,
     lastFetch,
-    isMockData: useMockData,
-    refreshData: useMockData ? () => {} : refreshData,
-    changeMode: useMockData ? () => {} : changeMode
+    isMockData: ENABLE_MOCK_DATA,
+    refreshData: ENABLE_MOCK_DATA ? () => {} : refreshData,
+    changeMode: ENABLE_MOCK_DATA ? () => {} : changeMode
   };
 };
 
