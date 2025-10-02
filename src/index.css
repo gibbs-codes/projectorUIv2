@@ -117,45 +117,11 @@ body {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
-/* TV Display Optimizations */
+/* TV Display Optimizations - simplified to avoid conflicts */
 @media screen and (min-width: 1920px) {
-  /* Large screens (TV/projector displays) */
-  html {
-    zoom: 0.8;
-  }
-
-  body {
-    transform: scale(0.8);
-    transform-origin: 0 0;
-    width: 125%;
-    height: 125%;
-  }
-}
-
-@media screen and (min-width: 2560px) {
-  /* Ultra-wide and 4K displays */
-  html {
+  /* Large screens (TV/projector displays) - only apply if no .tv-display class */
+  body:not(.tv-display) {
     zoom: 0.75;
-  }
-
-  body {
-    transform: scale(0.75);
-    transform-origin: 0 0;
-    width: 133.33%;
-    height: 133.33%;
-  }
-}
-
-/* Android TV specific adjustments */
-@media screen and (-webkit-device-pixel-ratio: 1.5) {
-  html {
-    zoom: 0.7;
-  }
-}
-
-@media screen and (-webkit-device-pixel-ratio: 2) {
-  html {
-    zoom: 0.6;
   }
 }
 
@@ -169,18 +135,13 @@ body {
 
 /* TV Display class for JavaScript-detected large screens */
 .tv-display {
-  transform: scale(0.75);
-  transform-origin: top left;
-  width: 133.33%;
-  height: 133.33%;
+  zoom: 0.75;
 }
 
 /* More aggressive scaling for Android TV */
 @media screen and (orientation: landscape) and (min-width: 1920px) {
   .tv-display {
-    transform: scale(0.7);
-    width: 142.86%;
-    height: 142.86%;
+    zoom: 0.7;
   }
 }
 

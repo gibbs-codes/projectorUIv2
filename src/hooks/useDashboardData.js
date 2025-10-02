@@ -89,6 +89,13 @@ const useDashboardData = () => {
   const useMockData = import.meta.env.VITE_ENABLE_MOCK_DATA === 'true';
   const pollInterval = 30000; // 30 seconds
 
+  // Debug logging for production
+  console.log('🔧 Dashboard Config:', {
+    apiBaseUrl,
+    useMockData,
+    env: import.meta.env.MODE
+  });
+
   const { data: apiData, loading, error, lastFetch, refreshData, changeMode } = useDashboardApi(
     useMockData ? null : apiBaseUrl,
     pollInterval
