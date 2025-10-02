@@ -1,7 +1,12 @@
 export const formatTime = (date) => {
-  const hours = date.getHours().toString().padStart(2, '0');
+  const hours12 = date.getHours() % 12 || 12;
   const minutes = date.getMinutes().toString().padStart(2, '0');
-  return { hours, minutes };
+  const ampm = date.getHours() >= 12 ? 'PM' : 'AM';
+  return {
+    hours: hours12.toString().padStart(2, '0'),
+    minutes,
+    ampm
+  };
 };
 
 export const formatDate = (date) => {

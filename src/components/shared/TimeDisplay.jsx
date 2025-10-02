@@ -19,6 +19,14 @@ const TimeDisplay = ({ timeObj }) => {
       >
         {timeObj.minutes}
       </span>
+      {timeObj.ampm && (
+        <span
+          className="text-white/60 text-6xl font-light leading-none self-end mb-8"
+          style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
+        >
+          {timeObj.ampm}
+        </span>
+      )}
     </div>
   );
 };

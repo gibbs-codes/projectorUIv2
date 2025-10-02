@@ -14,11 +14,10 @@ import WeatherDisplay from './components/shared/WeatherDisplay';
 
 const App = () => {
   const [time, setTime] = useState(new Date());
-  const [localMode, setLocalMode] = useState('personal');
 
-  const { data: dashboardData, isConnected, error, isMockData } = useDashboardData();
+  const { data: dashboardData, loading, error, lastFetch, isMockData, refreshData, changeMode } = useDashboardData();
 
-  const mode = dashboardData?.mode || localMode;
+  const mode = dashboardData?.currentMode || dashboardData?.mode || 'personal';
 
   useEffect(() => {
     const timer = setInterval(() => setTime(new Date()), 1000);
@@ -30,7 +29,7 @@ const App = () => {
   const dateObj = formatDate(time);
 
   // Loading state
-  if (!dashboardData) {
+  if (loading && !dashboardData) {
     return (
       <div className="w-full h-screen bg-black flex items-center justify-center">
         <div className="text-white text-2xl">Loading dashboard...</div>
@@ -92,33 +91,61 @@ const App = () => {
         <div className="flex justify-between items-center mt-8">
           <div className="flex gap-8">
             <button
-              onClick={() => setLocalMode('personal')}
+              onClick={() => changeMode('personal')}
               className={`text-lg tracking-wider uppercase font-light ${mode === 'personal' ? 'text-white' : 'text-white/40'}`}
             >
               Personal
             </button>
             <button
-              onClick={() => setLocalMode('guest')}
+              onClick={() => changeMode('guest')}
               className={`text-lg tracking-wider uppercase font-light ${mode === 'guest' ? 'text-white' : 'text-white/40'}`}
             >
               Guest
             </button>
             <button
-              onClick={() => setLocalMode('briefing')}
+              onClick={() => changeMode('briefing')}
               className={`text-lg tracking-wider uppercase font-light ${mode === 'briefing' ? 'text-white' : 'text-white/40'}`}
             >
               Briefing
             </button>
+            <button
+              onClick={() => changeMode('weather')}
+              className={`text-lg tracking-wider uppercase font-light ${mode === 'weather' ? 'text-white' : 'text-white/40'}`}
+            >
+              Weather
+            </button>
+            <button
+              onClick={() => changeMode('art')}
+              className={`text-lg tracking-wider uppercase font-light ${mode === 'art' ? 'text-white' : 'text-white/40'}`}
+            >
+              Art
+            </button>
           </div>
 
           <div className="flex gap-6 items-center">
-            {/* Connection status */}
-            <div className="flex items-center gap-2">
-              <div className={`w-2 h-2 rounded-full ${isConnected ? 'bg-green-400 animate-pulse' : 'bg-red-400'}`} />
-              <span className="text-white/50 text-sm">
-                {isConnected ? 'Connected' : 'Disconnected'}
-              </span>
-            </div>
+            {/* Manual refresh button */}
+            <button
+              onClick={refreshData}
+              disabled={loading}
+              className="text-white/60 hover:text-white text-sm tracking-wider uppercase font-light transition-colors disabled:opacity-50"
+            >
+              {loading ? 'Refreshing...' : 'Refresh'}
+            </button>
+
+            {/* Last fetch time */}
+            {lastFetch && !isMockData && (
+              <div className="text-white/40 text-sm">
+                Last updated: {lastFetch.toLocaleTimeString()}
+              </div>
+            )}
+
+            {/* Loading indicator */}
+            {loading && (
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 rounded-full bg-blue-400 animate-pulse" />
+                <span className="text-white/50 text-sm">Loading</span>
+              </div>
+            )}
 
             {/* Mock data badge */}
             {isMockData && (
