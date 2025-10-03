@@ -1,7 +1,8 @@
 import { Car, MapPin } from 'lucide-react';
 
 const NextEventCard = ({ event }) => {
-  const isUrgent = event.commuteTime >= event.minutesUntil - 5;
+  const commuteTime = event.commuteTime || 0;
+  const isUrgent = commuteTime > 0 && commuteTime >= event.minutesUntil - 5;
 
   return (
     <div className={`relative border-2 ${isUrgent ? 'border-orange-500 animate-pulse' : 'border-white/20'} bg-black/40 backdrop-blur-sm h-full`}>
@@ -26,19 +27,21 @@ const NextEventCard = ({ event }) => {
           <span className="text-white/50 text-lg">IN {event.minutesUntil} MIN</span>
         </div>
 
-        {/* Commute section */}
-        <div className={`flex items-center gap-3 p-4 border ${isUrgent ? 'border-orange-500/50 bg-orange-500/10' : 'border-white/10'}`}>
-          <Car className={isUrgent ? 'text-orange-400' : 'text-white/70'} size={32} strokeWidth={1.5} />
-          <div>
-            <div className={`text-2xl font-bold ${isUrgent ? 'text-orange-400' : 'text-white'}`}>
-              {isUrgent ? 'LEAVE NOW' : `${event.commuteTime} min`}
-            </div>
-            <div className="text-white/50 text-sm flex items-center gap-2">
-              <MapPin size={12} />
-              {event.location}
+        {/* Commute section - only show if location exists */}
+        {event.location && (
+          <div className={`flex items-center gap-3 p-4 border ${isUrgent ? 'border-orange-500/50 bg-orange-500/10' : 'border-white/10'}`}>
+            <Car className={isUrgent ? 'text-orange-400' : 'text-white/70'} size={32} strokeWidth={1.5} />
+            <div>
+              <div className={`text-2xl font-bold ${isUrgent ? 'text-orange-400' : 'text-white'}`}>
+                {isUrgent ? 'LEAVE NOW' : commuteTime > 0 ? `${commuteTime} min` : 'No commute needed'}
+              </div>
+              <div className="text-white/50 text-sm flex items-center gap-2">
+                <MapPin size={12} />
+                {event.location}
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );
