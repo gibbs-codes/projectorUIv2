@@ -1,6 +1,22 @@
 import { Car, MapPin } from 'lucide-react';
 
 const NextEventCard = ({ event }) => {
+  if (!event) {
+    return (
+      <div className="relative border-2 border-white/20 bg-black/40 backdrop-blur-sm h-full">
+        <div className="p-8">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-2 h-2 bg-white" />
+            <span className="text-white/40 text-xs tracking-[0.3em] uppercase">Next Event</span>
+          </div>
+          <h3 className="text-white text-4xl font-bold tracking-tight mb-3">
+            No upcoming events
+          </h3>
+        </div>
+      </div>
+    );
+  }
+
   const commuteTime = event.commuteTime || 0;
   const isUrgent = commuteTime > 0 && commuteTime >= event.minutesUntil - 5;
 
